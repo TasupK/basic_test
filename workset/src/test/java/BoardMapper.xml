@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ja.workset.boardMapper.BoardMapper">
+
+	<select id="getBoardList" resultType="java.util.LinkedHashMap">
+		SELECT
+			board_seq
+			,board_title 
+			,board_writer 
+			,reg_date 
+		FROM board_data
+	</select>
+	
+	<select id="getBoard" parameterType="int" resultType="java.util.HashMap">
+		SELECT 
+			board_seq
+			,board_title 
+			,board_writer 
+			,reg_date 
+		FROM board_data
+		WHERE board_seq = #{board_seq}
+	</select>
+	
+	<insert id="insertBoardData" parameterType="com.ja.workset.boardVo.BoardVO">
+		INSERT INTO board_data(board_writer, user_id , board_title, board_content, reg_date)
+		VALUES(#{board_writer},#{user_id},#{board,title},#{board_content}, now());
+	</insert>
+	
+	<update id="updateBoardData" parameterType="com.ja.workset.boardVo.BoardVO">
+		UPDATE board_data 
+		SET 
+			board_title = #{board_title}
+			,board_content = #{board_content}
+			,reg_date = now()
+		WHERE board_seq = #{board_seq}
+	</update>
+	
+	<delete id="deleteBaordData" parameterType="int">
+		DELETE from board_data 
+		WHERE board_seq = #{board_seq};	
+	</delete>
+
+
+</mapper>
